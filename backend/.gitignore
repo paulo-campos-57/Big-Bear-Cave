@@ -1,0 +1,50 @@
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# dotenv environment variables
+.env
+.env.*
+
+# Flask-related cache
+instance/
+*.db
+*.sqlite3
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# Test results
+coverage/
+htmlcov/
+.tox/
+.nox/
+
+# Wheels
+*.whl
+
+# Uploads folder
+uploads/
+
+# Flask session files
+flask_session/
