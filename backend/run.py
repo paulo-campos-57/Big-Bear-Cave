@@ -86,14 +86,7 @@ def create_env_template():
     env_path = Path(".env")
     if not env_path.exists():
         print_warning(".env file not found. Creating template...")
-        env_content = """# Database Configuration
-DATABASE_URL=postgresql://username:password@localhost:5432/rpg_site_db
-
-# Flask Configuration
-FLASK_ENV=development
-FLASK_DEBUG=True
-
-"""
+        env_content = ""
         with open(".env", "w") as f:
             f.write(env_content)
         print_warning("Please edit .env file with your actual database credentials!")
