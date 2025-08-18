@@ -38,7 +38,7 @@ def cadastro():
         filename = secure_filename(f"{uuid.uuid4()}{ext}")
         image.save(os.path.join(UPLOAD_FOLDER, filename))
 
-    new_user = User(name=name, email=email, password=hashed_password, role=role, profile_image_path=filename)
+    new_user = User(name=name, email=email, password=hashed_password, user_role=role, profile_image_path=filename)
     db.session.add(new_user)
     db.session.commit()
 
