@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: rpg_postgres
+    environment:
+      POSTGRES_USER: rpg_user
+      POSTGRES_PASSWORD: rpg_pass
+      POSTGRES_DB: rpg_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rpg_user -d rpg_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: rpg_backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://rpg_user:rpg_pass@db:5432/rpg_db
+      FLASK_ENV: development
+    volumes:
+      - ./backend/uploads:/app/uploads
+    ports:
+      - "5000:5000"
+    command: python -u app/app.py
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: rpg_frontend
+    environment:
+      VITE_BACKEND_URL: http://localhost:5000
+    ports:
+      - "5173:5173"
+    command: sh -c "pnpm dev --host 0.0.0.0 --port 5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  db-data: 
