@@ -8,7 +8,7 @@
 </p>
 
 ---
-## About te project
+## About the project
 The Big Bear's Cave is a website developed for RPG players, where they can upload their characters, their stories, and play togheter!
 
 ## Requirements
