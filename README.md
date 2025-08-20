@@ -79,7 +79,7 @@ To run the project properly, follow these steps:
           </sub>
         </a>
         <br>
-        <sub>grossiter04@hotmail.com</sub>
+        <sub>gabrielrossiter04@hotmail.com</sub>
       </td>
           <td align="center">
         <a href="https://github.com/paulo-campos-57" target="_blank">
