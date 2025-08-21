@@ -5,10 +5,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from flask import Flask
 from flask_cors import CORS
+from flask_migrate import Migrate  
 from db.db import db, DATABASE_URL
 from routes.routes import bp as routes_bp
 from models.models import *
-
 
 def create_app():
     app = Flask(__name__)
@@ -18,13 +18,14 @@ def create_app():
 
     db.init_app(app)
 
+    # 👇 Inicializa as migrações
+    migrate = Migrate(app, db)
+
+    # Registra rotas
     app.register_blueprint(routes_bp)
 
-    with app.app_context():
-        db.create_all()
-
-
     return app
+
 
 if __name__ == '__main__':
     app = create_app()

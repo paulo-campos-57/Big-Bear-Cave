@@ -9,7 +9,8 @@ create table users (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   	user_role integer not NULL,
-  	profile_image_path varchar(300)
+  	profile_image_path varchar(300),
+	teste varchar(100)
 );
 
 ALTER TABLE users ALTER COLUMN password TYPE varchar(255);

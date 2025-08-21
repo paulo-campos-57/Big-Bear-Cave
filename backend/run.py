@@ -4,8 +4,13 @@ import subprocess
 import venv
 import platform
 from pathlib import Path
+from flask.cli import FlaskGroup   # 👈 Import para CLI
+from app.app import create_app     # 👈 Usa a factory do app
+from db.db import db               # 👈 Para migrações
 
-
+# ========================================
+# Cores para print
+# ========================================
 class Colors:
     RED = "\033[0;31m"
     GREEN = "\033[0;32m"
@@ -49,6 +54,9 @@ def run_command(command, check=True, shell=False):
         return e
 
 
+# ========================================
+# Setup helpers
+# ========================================
 def check_python_version():
     version = sys.version_info
     if version.major < 3 or (version.major == 3 and version.minor < 8):
@@ -100,7 +108,7 @@ def create_env_template():
     env_path = Path(".env")
     if not env_path.exists():
         print_warning(".env file not found. Creating template...")
-        env_content = ""
+        env_content = "DATABASE_URL=postgresql://user:password@localhost:5432/dbname\n"
         with open(".env", "w") as f:
             f.write(env_content)
         print_warning("Please edit .env file with your actual database credentials!")
@@ -123,33 +131,39 @@ def check_project_structure():
 
 def run_flask_app():
     python_exec = get_python_executable()
-
     print_success("Setup completed successfully!")
     print("")
     print_status("Starting Flask application...")
     print("")
-
-    # Change to app directory and run the application
     os.chdir("app")
     subprocess.run([python_exec, "app.py"])
 
 
+# ========================================
+# CLI do Flask (migrações, etc)
+# ========================================
+app = create_app()
+cli = FlaskGroup(app)
+
+# ========================================
+# Entry point
+# ========================================
 def main():
     print("🚀 Starting Big Bear's Cave Backend Setup...")
     print("")
 
     check_python_version()
-
     create_virtual_environment()
-
     install_requirements()
-
     create_env_template()
-
     check_project_structure()
-
     run_flask_app()
 
 
 if __name__ == "__main__":
-    main()
+    # Se rodar com: python run.py -> roda setup normal
+    # Se rodar com: flask db migrate/upgrade -> funciona CLI
+    if len(sys.argv) > 1:
+        cli()   # 👈 executa comandos do flask (db migrate, db upgrade, etc)
+    else:
+        main()
