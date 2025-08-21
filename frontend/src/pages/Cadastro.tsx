@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { toast } from "react-toastify";
+import Footer from "../components/Footer";
 
 type FormDataType = {
     name: string;
@@ -128,6 +129,7 @@ export default function Cadastro() {
                     Cadastrar
                 </button>
             </form>
+            <Footer />
         </div>
     );
 }
