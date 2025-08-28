@@ -28,18 +28,14 @@ services:
         condition: service_healthy
     ports:
       - "5000:5000"
-    # O volume sincroniza seu código local com o container, ideal para desenvolvimento
     volumes:
       - ./backend:/app
-    # Variáveis de ambiente movidas para cá (local correto)
     environment:
       - DATABASE_URL=postgresql+psycopg2://rpg_user:rpg_pass@db:5432/rpg_db
       - FLASK_ENV=development
-      - FLASK_APP=run.py # ou o seu arquivo de entrada principal
+      - FLASK_APP=run.py
       - FLASK_RUN_HOST=0.0.0.0
       - FLASK_RUN_PORT=5000
-    # O comando foi removido, pois o CMD do Dockerfile já faz isso.
-    # O Docker Compose usará o CMD do Dockerfile por padrão.
 
   frontend:
     build:

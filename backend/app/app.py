@@ -18,10 +18,8 @@ def create_app():
 
     db.init_app(app)
 
-    # 👇 Inicializa as migrações
     migrate = Migrate(app, db)
 
-    # Registra rotas
     app.register_blueprint(routes_bp)
 
     return app
