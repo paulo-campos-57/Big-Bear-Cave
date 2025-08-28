@@ -23,6 +23,7 @@ class User(db.Model):
     player_profile = db.relationship('PlayerProfile', back_populates='user', uselist=False, cascade="all, delete-orphan")
 
 
+
 # Nova classe PlayerProfile
 class PlayerProfile(db.Model):
     __tablename__ = "player_profile"
